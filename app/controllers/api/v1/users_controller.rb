@@ -44,7 +44,11 @@ class Api::V1::UsersController < ApplicationController
      private
 
      def user_params
-        params.require(:user).permit(:username,:password)
+        if params[:user].is_a? String
+            params[:user]
+        else
+           params.permit(:username,:password)
+        end
      end
 
      def find_user
