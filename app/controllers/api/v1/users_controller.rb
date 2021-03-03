@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+    before_action: find_user, only:[:show,:update,:destroy]
     def index
         @users=User.all
         render json: @users
@@ -6,7 +7,6 @@ class Api::V1::UsersController < ApplicationController
 
     #GET /user/:id
     def show
-        @user=User.find(params[:id])
         render json: @user
     end
 
@@ -23,7 +23,6 @@ class Api::V1::UsersController < ApplicationController
 
      #PUT /users/:id
      def update
-        @user=User.find(params[:id])
         if @user
              @user.update(user_params)
              render json: {message: 'User successfully updated.'},status: 200
@@ -34,7 +33,6 @@ class Api::V1::UsersController < ApplicationController
 
      #DELETE /users/:id
      def destroy
-        @user=User.find(params[:id])
         if @user
             @user.destroy
             render json: {message:'User successfully deleted.'},status: 200
@@ -48,6 +46,11 @@ class Api::V1::UsersController < ApplicationController
      def user_params
         params.require(:user).permit(:username,:password)
      end
+
+     def find_user
+        @user=User.find(params[:id])
+     end
+
 
        
 end

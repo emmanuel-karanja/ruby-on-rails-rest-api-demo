@@ -1,4 +1,5 @@
 class Api::V1::FactsController < ApplicationController
+    before_action: find_fact,only: [:show,:update,:destroy]
     def index
         @facts=Fact.all
         render json: @facts
@@ -43,5 +44,6 @@ class Api::V1::FactsController < ApplicationController
 
     def find_fact
         @fact=Fact.find(params[:id])
+        puts @fact
     end
 end
