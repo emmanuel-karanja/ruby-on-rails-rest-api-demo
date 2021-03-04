@@ -19,7 +19,12 @@ class Api::V1::UsersController < ApplicationController
           token=encode_token({user_id: @user.id})
           render json: {user: @user,token: token}
         else
-            render error: {error:'Unable to create User.'},status: 400    
+            #flash.now[:messages] = @user.errors.full_messages[0]
+            render json: { 
+                errors: @user.errors
+               # error_codes: @user.errors.keys.map { |f| f.upcase + "_ERROR" }
+              },
+              status: 422
         end
      end
 

@@ -10,11 +10,15 @@ class Api::V1::FactsController < ApplicationController
     end
 
     def create
-        @fact=Fact.new(fact_params)
-        if @fact.save
+        @fact=Fact.create(fact_params)
+        if @fact.valid?
             render json: @fact
         else
-            render error: { error: 'Unable to create Fact.'},status: 400
+            render json: { 
+                errors: @fact.errors
+                #error_codes: @fact.errors.keys.map { |f| f.upcase + "_ERROR" }
+              },
+              status: 422
         end
     end
 
