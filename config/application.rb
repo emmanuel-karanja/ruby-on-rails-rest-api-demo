@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails"
+require "rack"
 # Pick the frameworks you want:
 require "active_model/railtie"
 require "active_job/railtie"
@@ -15,10 +16,12 @@ require "action_cable/engine"
 # require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative './filter_route'
 module ApiRestSqlite
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -36,5 +39,7 @@ module ApiRestSqlite
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use FilterRoute
+    
   end
 end

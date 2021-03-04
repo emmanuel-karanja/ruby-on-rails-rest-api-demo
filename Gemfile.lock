@@ -148,6 +148,7 @@ DEPENDENCIES
   byebug
   pg
   puma (~> 5.0)
+  rack
   rails (~> 6.1.3)
   tzinfo-data
 
