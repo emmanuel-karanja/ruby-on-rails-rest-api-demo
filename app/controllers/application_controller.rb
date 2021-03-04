@@ -15,8 +15,13 @@ class ApplicationController < ActionController::API
     if auth_header
         #get the token from header
         token=auth_header.split(' ')[1]
+        logger.info 'the token from the header..'
+        logger.info token
         begin
-            JWT.decode(token,'secret',true,algorithm:'HS256')
+            decoded=JWT.decode(token,'secret',true,algorithm:'HS256')
+            logger.info 'decoded..'
+            logger.info decoded
+            decoded
         rescue JWT::DecodeError
             nil
         end
@@ -27,7 +32,10 @@ class ApplicationController < ActionController::API
      #get current logged in user
       if decoded_token
         user_id=decoded_token[0]['user_id']
+        logger.info 'the user_id..'
+        logger.info user_id
         @user=User.find_by(id:user_id)
+        
       end
    end
 
