@@ -20,11 +20,7 @@ class Api::V1::UsersController < ApplicationController
           render json: {user: @user,token: token}
         else
             #flash.now[:messages] = @user.errors.full_messages[0]
-            render json: { 
-                errors: @user.errors
-               # error_codes: @user.errors.keys.map { |f| f.upcase + "_ERROR" }
-              },
-              status: 422
+            render json: { errors: @user.errors, error_code: "VALIDATION_ERROR"},status: 422
         end
      end
 

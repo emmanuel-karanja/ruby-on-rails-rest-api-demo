@@ -15,8 +15,8 @@ class Api::V1::FactsController < ApplicationController
             render json: @fact
         else
             render json: { 
-                errors: @fact.errors
-                #error_codes: @fact.errors.keys.map { |f| f.upcase + "_ERROR" }
+                errors: @fact.errors,
+                error_code: "VALIDATION_ERROR" }
               },
               status: 422
         end
